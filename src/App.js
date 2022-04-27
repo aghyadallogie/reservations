@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect, useState } from "react";
+import { Company } from "./components/Company";
+import { styles } from "./styles";
 
 function App() {
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/timeSlots`)
+      .then((res) => res.json())
+      .then((res) => setCompanies(res))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={styles.container}>
+      {companies?.map((comp) => (
+        <Company key={comp.id} name={comp.name} timeslots={comp.time_slots} companyId={comp.id} />
+      ))}
     </div>
   );
 }
