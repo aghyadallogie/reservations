@@ -1,14 +1,21 @@
 import styled from "styled-components";
 
 export const TimeSlotContainer = styled.div`
-cursor: pointer;
-padding: 10px 20px;
-margin: 10px;
-border-radius: 4px;
-background: #FAF5E4;
-text-align: center;
-font-size: 17px;
-letter-spacing: .5px;
+  height: 50px;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 4px;
+  background: #faf5e4;
+  text-align: center;
+  font-size: 17px;
+  letter-spacing: 0.5px;
+  background: ${({ bg }) => bg};
+  border: ${({ borders }) => borders};
+
+  &:hover {
+    border: 2px solid #ff6363;
+  }
 
   i {
     padding-left: 5px;
@@ -16,11 +23,15 @@ letter-spacing: .5px;
 `;
 
 export const DeleteIcon = styled.i`
-  padding-top: 6px;
   cursor: pointer;
   color: #ff6363;
-  margin-left: 15px;
+  padding-top: 6px;
+  padding-left: 10px;
   font-size: 25px;
+
+  &:hover {
+    color: red;
+  }
 `;
 
 export const Container = styled.div`
@@ -39,15 +50,16 @@ export const Title = styled.p`
   padding-bottom: 30px;
 `;
 
-export const Reservation = styled.div`
+export const ReservationContainer = styled.div`
+  display: flex;
   font-size: 18px;
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 80px;
   padding: 10px 10px;
   border-radius: 10px;
+  text-align: center;
 
   i {
     padding-left: 7px;
@@ -59,7 +71,7 @@ export const Reservation = styled.div`
 `;
 
 export const CompanyContainer = styled.div`
-  width: 25vw;
+  width: 20vw;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -72,5 +84,13 @@ export const DayContainer = styled.div`
   margin: "10px 10px";
   border-radius: 4px;
   color: #125b50;
-  margin: 5px 0;
+  margin: 10px 0;
+
+  > p {
+    color: white;
+    text-align: center;
+    padding-top: 15px;
+    font-size: 18px;
+    letter-spacing: 3px;
+  }
 `;

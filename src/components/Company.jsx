@@ -1,61 +1,38 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  checkDateTimeRange,
-  formatDateTime,
-  getCommonValues,
-  groupBy,
-} from "../helpers";
-import { cancelReservationAction } from "../store/actions";
+import { useSelector } from "react-redux";
+import { checkDateTimeRange, getCommonValues, groupByDay } from "../helpers";
 import {
   CompanyContainer,
   DayContainer,
-  DeleteIcon,
-  Reservation,
+  ReservationContainer,
   Title,
 } from "../styles";
+import { Reservation } from "./Reservation";
 import { TimeSlot } from "./TimeSlot";
 
 export const Company = ({ name, timeslots, companyId }) => {
-  const dispatch = useDispatch();
-
+  // select pieces of state from global store
   const state = useSelector((state) => state);
   const reservations = state.map((compState) => compState.timeslot);
   const companyState = state.find((item) => item.id === companyId);
   const bookedTimeslot = companyState.timeslot;
 
+  // find days to group by
   const days = getCommonValues(timeslots);
-  const groupedByDay = days.map((day) => groupBy(timeslots, day));
+  const groupedByDay = days.map((day) => groupByDay(timeslots, day));
 
   return (
     <div style={{ margin: "0 auto" }}>
       <Title>{name}</Title>
       {bookedTimeslot ? (
-        <div>
-          <Reservation>
-            <div>
-              <span>
-                {formatDateTime(bookedTimeslot.start_time).slice(0, 10)}
-                <br />
-              </span>
-              <span>
-                {formatDateTime(bookedTimeslot.start_time).slice(10)}
-                <i className="angle double right icon"></i>
-                {formatDateTime(bookedTimeslot.end_time).slice(10)}
-              </span>
-            </div>
-            <DeleteIcon
-              onClick={() => dispatch(cancelReservationAction(companyId))}
-              className="trash icon"
-            ></DeleteIcon>
-          </Reservation>
-        </div>
+        <Reservation companyId={companyId} bookedTimeslot={bookedTimeslot} />
       ) : (
-        <Reservation>No Reservation</Reservation>
+        <ReservationContainer>No Reservation</ReservationContainer>
       )}
       <CompanyContainer>
         {groupedByDay?.map((day) => (
           <DayContainer key={day}>
+            <p>{day[0].start_time.slice(0, 10)}</p>
             {day.map((ts) => (
               <TimeSlot
                 key={ts.start_time}

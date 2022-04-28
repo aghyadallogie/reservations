@@ -17,7 +17,9 @@ function App() {
   return (
     <Container>
       {error ? (
-        <h1>{error?.message || "Something went wrong!"}</h1>
+        <div style={{ margin: "0 auto" }}>
+          <h1>{error?.message || "Something went wrong!"}</h1>
+        </div>
       ) : (
         companies?.map((comp) => (
           <Company

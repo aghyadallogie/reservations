@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styledComponents from "styled-components";
 import { checkDateTimeRange, formatDateTime } from "../helpers";
 import { reserveTimeSlotAction } from "../store/actions";
 import { TimeSlotContainer } from "../styles";
@@ -13,6 +12,7 @@ export const TimeSlot = ({ timeslot, companyId, bookedTimeslot, booked }) => {
 
   const dispatch = useDispatch();
 
+  // prevent selection of overlaping time slots
   const makeReservation = () => {
     if (reservations.find((item) => checkDateTimeRange(item, timeslot))) {
       alert("Unavailable Time Slot!");
@@ -24,13 +24,11 @@ export const TimeSlot = ({ timeslot, companyId, bookedTimeslot, booked }) => {
   return (
     <TimeSlotContainer
       onClick={makeReservation}
-      style={{
-        border: bookedTimeslot === timeslot ? "2px solid whitesmoke" : "",
-        background: booked ? "gray" : "",
-      }}
+      bg={booked ? "gray" : ""}
+      borders={bookedTimeslot === timeslot ? "2px solid whitesmoke" : ""}
     >
       <p>
-        {formatDateTime(start_time)}
+        {formatDateTime(start_time).slice(10)}
         <i className="angle double right icon"></i>
         {formatDateTime(end_time).slice(10)}
       </p>
