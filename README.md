@@ -15,4 +15,4 @@ You may also see any lint errors in the console.
 
 
 
-![screenshot]{Capture.JPG}
+![screenshot]{https://github.com/aghyadallogie/reservations/blob/main/Capture.JPG}
